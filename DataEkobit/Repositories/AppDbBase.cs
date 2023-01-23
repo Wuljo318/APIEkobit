@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.InteropServices;
@@ -19,33 +20,35 @@ namespace DataEkobit.Repositories
             appDbContext = appDC;
         }
 
-        public IQueryable<T> FindAll()
+        public async Task<List<T>> FindAll()                          //koji tip koristit ako ne dozvoljava List
         {
-            return appDbContext.Set<T>().AsNoTracking();
+            return await appDbContext.Set<T>().AsNoTracking().ToListAsync();
         }
 
-        public IQueryable<T> FindUser(Expression<Func<T, bool>>expression)
+        public async Task<T> FindById(Expression<Func<T, bool>>expression)
         {
-            return appDbContext.Set<T>().Where(expression).AsNoTracking();
+            var entity = await appDbContext.Set<T>().Where(expression).FirstOrDefaultAsync();
+            return entity;
         }
 
         public void Create(T entity)
         {
-            appDbContext.Set<T>().Add(entity);
-            //appDbContext.Database.ExecuteSqlCommand("SET IDENTITIY_INSERT ")
-            appDbContext.SaveChanges();
+            appDbContext.Set<T>().Add(entity);                  //ne dozvoljava da se stavi await
         }
 
         public void Update(T entity)
         {
             appDbContext.Set<T>().Update(entity);
-            appDbContext.SaveChanges();
         }
 
         public void Delete(T entity)
         {
-            appDbContext.Set<T>().Remove(entity);
-            appDbContext.SaveChanges();
+            appDbContext.Set<T>().Remove(entity);   
+        }
+
+        public async Task Save()
+        {
+            await appDbContext.SaveChangesAsync();
         }
     }
 }

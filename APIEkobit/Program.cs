@@ -24,7 +24,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //builder.Services.AddScoped<IUserService<User>, UserService<User>>();
 builder.Services.AddScoped<IAppDbBase<User>, AppDbBase<User>>();                //ne komentirati
 builder.Services.AddScoped<UserBase>();                                         //ne komentirati
-builder.Services.AddScoped<IEntityService<User>, EntityService<User>>();        //ne komentirati
+/*builder.Services.AddScoped<IEntityService<User>, EntityService<User>>();  */      //ne komentirati
 builder.Services.AddScoped<IUserService, UserService>();
 //builder.Services.AddScoped<IUserService, EntityService<User>>();
 //builder.Services.AddScoped<IUserService, UserService>();

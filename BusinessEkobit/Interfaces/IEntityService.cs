@@ -5,10 +5,10 @@ namespace BusinessEkobit.Interfaces
 {
     public interface IEntityService<T>
     {
-        IQueryable<T> GetAll();
-        IQueryable<T> GetById(Expression<Func<T, bool>> expression);
-        void Add(T entity);
-        void Update(T entity);
-        void Delete(T entity);
+        Task<List<T>> GetAll();
+        Task<T> GetById(Expression<Func<T, bool>> expression);
+        Task Add(T entity);
+        Task Update(T entity);
+        Task Delete(T entity);
     }
 }

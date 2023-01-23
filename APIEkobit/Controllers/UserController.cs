@@ -1,4 +1,5 @@
 ﻿using BusinessEkobit.Interfaces;
+using BusinessEkobit.Exceptions;
 using BusinessEkobit.Services;
 using DataEkobit.Entities;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
@@ -20,22 +21,41 @@ namespace APIEkobit.Controllers
         }
 
         [HttpGet("getall")]
-        public IQueryable<User> GetAll()
+        public Task<List<User>> GetAll()
         {
             return _userService.GetAll();
         }
 
         [HttpGet("getbyid/{id}")]
-        public IQueryable<User> GetById([FromRoute] long id)
+        public async Task<User> GetById([FromRoute] long id)
         {
-            return _userService.GetById(_=>_.UserId==id);
+            //if(x=> x.UserId == id)
+            //{
+            //    return _userService.GetById(_ => _.UserId == id);
+            //}
+            //else
+            //{
+            //    throw new UserNotFoundException();
+            //}
+
+            try
+            {
+                var entity = await _userService.GetById(_ => _.UserId == id);
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new EntityNotFound(ex.Message, ex);
+            }
+
         }
 
 
         [HttpPost("add")]
         public void Add([FromBody]User user)
         {       
-            _userService.Add(user);
+            _userService.Add(user); 
+            
         }
 
         //[HttpPost]
