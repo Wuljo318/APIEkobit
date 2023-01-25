@@ -23,7 +23,7 @@ namespace BusinessEkobit.Services
             var entity = await _appDbBase.FindById(expression);                   
             if (entity == null)                                           
             {
-                throw new EntityNotFound("Korisnik nije pronaden");
+                throw new EntityNotFoundException("Entitet nije pronaden");
             }
             else
             {
@@ -38,7 +38,7 @@ namespace BusinessEkobit.Services
             _appDbBase.Create(entity);
             await _appDbBase.Save();
         }
-        public async Task Update(T entity)
+        public virtual async Task Update(T entity)
         {
             _appDbBase.Update(entity);
             await _appDbBase.Save();

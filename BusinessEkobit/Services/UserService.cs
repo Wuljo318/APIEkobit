@@ -16,17 +16,18 @@ namespace BusinessEkobit.Services
         }
         public override async Task Add(User user)
         {
-            try
-            {
+            //try
+            //{
+                //user.Email.EmailCheck();
                 //EmailValidationExtension.EmailCheck(user.Email);
-                EmailValidationExtension2.EmailCheck(user.Email);
+                //EmailValidationExtension2.EmailCheck(user.Email);
                 _appDbBase.Create(user);
                 await _appDbBase.Save();
-            }
-            catch
-            {
-                throw new EmailNotCorrectException("Email not correct!");
-            }
+            //}
+            //catch
+            //{
+            //    throw new EmailNotCorrectException("Email not correct!");
+            //}
             
         }
     }

@@ -4,6 +4,7 @@ using DataEkobit.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataEkobit.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230124135839_AddedNullableProperties")]
+    partial class AddedNullableProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,58 +24,6 @@ namespace DataEkobit.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("DataEkobit.Entities.Country", b =>
-                {
-                    b.Property<int>("CountryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CountryId"));
-
-                    b.Property<string>("Capital")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Continent")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CountryCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CountryId");
-
-                    b.ToTable("country");
-
-                    b.HasData(
-                        new
-                        {
-                            CountryId = 1,
-                            Capital = "Zagreb",
-                            Continent = "Europe",
-                            CountryCode = "CRO",
-                            Name = "Croatia"
-                        },
-                        new
-                        {
-                            CountryId = 2,
-                            Capital = "Sarajevo",
-                            Continent = "Europe",
-                            CountryCode = "BH",
-                            Name = "Bosnia and Herzegovina"
-                        },
-                        new
-                        {
-                            CountryId = 3,
-                            Capital = "Washington D.C.",
-                            Continent = "North America",
-                            CountryCode = "USA",
-                            Name = "United States of America"
-                        });
-                });
 
             modelBuilder.Entity("DataEkobit.Entities.User", b =>
                 {
@@ -92,9 +43,6 @@ namespace DataEkobit.Migrations
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("CountryId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("Email")
                         .IsRequired()

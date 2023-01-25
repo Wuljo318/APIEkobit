@@ -22,23 +22,11 @@ namespace DataEkobit.Context
             var connectionString = "Server=(localdb)\\MSSqlLocalDb;Database=Ekobit;Integrated Security=True;";
             optionsBuilder.UseSqlServer(connectionString);
 
-            //Ovo ispod bi možda sad moglo funkcionirati s ovim točnim imenom baze
-
-            //IConfigurationRoot configuration = new ConfigurationBuilder()
-
-            //    .SetBasePath(Directory.GetCurrentDirectory())
-            //    .AddJsonFile("appsettings.json")
-            //    .Build();
-            //optionsBuilder.UseSqlServer(configuration.GetConnectionString("AppDbContext"));
-
-            //IConfiguration configuration;
-            // var connectionStrings = new ConnectionStrings();
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<User>.HasKey(c => c.UserId);  //nađeno na https://learn.microsoft.com/en-us/ef/core/modeling/keys?tabs=fluent-api
+           
             modelBuilder.Entity<User>().HasData(
                 new User {
                     UserId = 1,
@@ -53,8 +41,6 @@ namespace DataEkobit.Context
                     Nickname = "Dodo"
                 },
 
-                //za ovog drugog nije dalo da se unese u bazu ako je UserId=2 jer već postoji u UserConfiguration
-
                 new User
                 {
                     UserId = 3,
@@ -68,36 +54,35 @@ namespace DataEkobit.Context
                     Password = "lozinka1",
                     Nickname = "Dodo1"
                 }
-
-                //new User
-                //{
-                //    Name = "Dominik1",
-                //    LastName = "Vuljak1",
-                //    Email = "dvuljak1@ekobit.hr",
-                //    Address = "Ulica 11",
-                //    City = "Varaždin1",
-                //    ZipCode = 42000,
-                //    Birthday = new DateTime(2001, 1, 1, 0, 0, 0),
-                //    Password = "lozinka1",
-                //    Nickname = "Dodo1"
-                //}
-
             );
             modelBuilder.ApplyConfiguration(new UserConfiguration()); //https://code-maze.com/migrations-and-seed-data-efcore/
+            modelBuilder.Entity<Country>().HasData(
+                new Country
+                {
+                    CountryId = 1,
+                    Name = "Croatia",
+                    Continent = "Europe",
+                    CountryCode = "CRO",
+                    Capital = "Zagreb"
+                },
+                new Country
+                {
+                    CountryId = 2,
+                    Name = "Bosnia and Herzegovina",
+                    Continent = "Europe",
+                    CountryCode = "BH",
+                    Capital = "Sarajevo"
+                },
+                new Country
+                {
+                    CountryId = 3,
+                    Name = "United States of America",
+                    Continent = "North America",
+                    CountryCode = "USA",
+                    Capital = "Washington D.C."
+                }
+                );
 
-            //IList<User> users = new List<User>();
-            //users.Add(new User() {
-            //    UserId = 2,
-            //    Name = "Dominik1",
-            //    LastName = "Vuljak1",
-            //    Email = "dvuljak1@ekobit.hr",
-            //    Address = "Ulica 11",
-            //    City = "Varaždin1",
-            //    ZipCode = 42000,
-            //    Birthday = new DateTime(2001, 1, 1, 0, 0, 0),
-            //    Password = "lozinka1",
-            //    Nickname = "Dodo1"
-            //});
         }
         public DbSet<User> Users { get; set; }
     }

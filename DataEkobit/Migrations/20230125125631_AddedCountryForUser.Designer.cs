@@ -4,6 +4,7 @@ using DataEkobit.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataEkobit.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230125125631_AddedCountryForUser")]
+    partial class AddedCountryForUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,8 +96,8 @@ namespace DataEkobit.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("CountryId")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("CountryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -118,6 +121,8 @@ namespace DataEkobit.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("CountryId");
 
                     b.ToTable("user", (string)null);
 
@@ -161,6 +166,15 @@ namespace DataEkobit.Migrations
                             Password = "lozinka1",
                             ZipCode = 42000
                         });
+                });
+
+            modelBuilder.Entity("DataEkobit.Entities.User", b =>
+                {
+                    b.HasOne("DataEkobit.Entities.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.Navigation("Country");
                 });
 #pragma warning restore 612, 618
         }

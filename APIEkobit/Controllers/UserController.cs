@@ -1,11 +1,17 @@
 ﻿using BusinessEkobit.Interfaces;
 using BusinessEkobit.Exceptions;
+using BusinessEkobit.Models;
+using BusinessEkobit.Automaper;
 using BusinessEkobit.Services;
 using DataEkobit.Entities;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
+using System.Collections.Generic;
+using AutoMapper;
+using System.Reflection.Metadata.Ecma335;
+using Microsoft.Identity.Client;
 
 namespace APIEkobit.Controllers
 {
@@ -13,62 +19,84 @@ namespace APIEkobit.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService; 
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
 
         [HttpGet("getall")]
-        public Task<List<User>> GetAll()
-        {
-            return _userService.GetAll();
+        public async Task<List<UserDTO>> GetAll()
+        {    
+            List<User> users = await _userService.GetAll();
+            //List<UserDTO> usersDTO = _mapper.Map<List<User>, List<UserDTO>> (users);     //prvi način
+            List<UserDTO> usersDTO = new List<UserDTO>();                                  //drugi način
+            foreach (User user in users)
+            {
+                UserDTO userDTO = _mapper.Map<UserDTO>(user);
+                usersDTO.Add(userDTO);                             
+            }
+            return usersDTO;
         }
-
+            
         [HttpGet("getbyid/{id}")]
-        public async Task<User> GetById([FromRoute] long id)
+        public async Task<UserDTO> GetById([FromRoute] long id)
         {
-            //if(x=> x.UserId == id)
-            //{
-            //    return _userService.GetById(_ => _.UserId == id);
-            //}
-            //else
-            //{
-            //    throw new UserNotFoundException();
-            //}
-
+            //mozda bi radi optimizacija koda bilo bolje da se tu makne try catch jer u Entity serviceu postoji bacanje errora
             try
             {
                 var entity = await _userService.GetById(_ => _.UserId == id);
-                return entity;
+                UserDTO userDTO = _mapper.Map<UserDTO>(entity);
+                return userDTO;
             }
             catch (Exception ex)
             {
-                throw new EntityNotFound(ex.Message, ex);
+                throw new EntityNotFoundException(ex.Message, ex);
             }
 
         }
 
-
         [HttpPost("add")]
-        public void Add([FromBody]User user)
-        {       
-            _userService.Add(user); 
-            
+        public async Task Add([FromBody]UserDTO userDTO)
+        {
+                User user = _mapper.Map<User>(userDTO);
+                await _userService.Add(user); //moguce da je neki problem sa spremanjem u bazu jer sve prode dobro i onda se kod debuganja zaustavi na spremanju
         }
 
-        //[HttpPost]
-        //public void Update(User user)
-        //{
-        //    _userService.Update(user);
-        //}
+        [HttpPut("update/{id}")]
+        public async Task Update([FromBody] UserDTO userDTO, [FromRoute]long id)
+        {
+            var entity = await _userService.GetById(_ => _.UserId == id);
+            if (entity == null)
+            {
+                throw new EntityNotFoundException("Wrong user");
+            }
+            else
+            {
+                entity = _mapper.Map<User>(userDTO);
+                //kak napraviti mapiranje, a da se promijene samo određeni atributi
+                await _userService.Update(entity);
+            }
 
-        //[HttpDelete]
-        //public void Delete(User user)
-        //{
-        //    _userService.Delete(user);
-        //}
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task Delete([FromRoute] long id)                    
+        {
+            var entity = await _userService.GetById(_ => _.UserId == id); 
+            if(entity == null)
+            {
+                throw new EntityNotFoundException("Wrong user");
+            }
+            else
+            {
+                await _userService.Delete(entity);
+            }
+            
+        }
 
     }
 }

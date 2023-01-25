@@ -9,25 +9,14 @@ using DataEkobit.Entities;
 
 namespace BusinessEkobit.Automaper
 {
-    public class MappingProfile 
+    public class MappingProfile : Profile
     {
-
-        public UserDTO MappingUserUserDTO(User user)
+        public MappingProfile()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>());
-            var mapper = new Mapper(config);
-            var userDTO = mapper.Map<UserDTO>(user);
-
-            return userDTO;
-        }
-
-        public User MappingUserDTOUser(UserDTO userDTO)
-        {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, User>());
-            var mapper = new Mapper(config);
-            var user = mapper.Map<User>(userDTO);
-
-            return user;
+            CreateMap<User, UserDTO>();
+            CreateMap<UserDTO, User>();
+            CreateMap<Country, CountryDTO>();
+            CreateMap<CountryDTO, Country>();
         }
     }
 }

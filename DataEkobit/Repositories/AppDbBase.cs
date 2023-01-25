@@ -20,20 +20,20 @@ namespace DataEkobit.Repositories
             appDbContext = appDC;
         }
 
-        public async Task<List<T>> FindAll()                          //koji tip koristit ako ne dozvoljava List
+        public async Task<List<T>> FindAll()                          
         {
             return await appDbContext.Set<T>().AsNoTracking().ToListAsync();
         }
 
         public async Task<T> FindById(Expression<Func<T, bool>>expression)
         {
-            var entity = await appDbContext.Set<T>().Where(expression).FirstOrDefaultAsync();
+            var entity = await appDbContext.Set<T>().Where(expression).AsNoTracking().FirstOrDefaultAsync();
             return entity;
         }
 
         public void Create(T entity)
         {
-            appDbContext.Set<T>().Add(entity);                  //ne dozvoljava da se stavi await
+            appDbContext.Set<T>().Add(entity);                  
         }
 
         public void Update(T entity)

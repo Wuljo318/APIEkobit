@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 namespace BusinessEkobit.Exceptions
 {
 
-    public class EntityNotFound : Exception
+    public class EntityNotFoundException : Exception
     {
-        public EntityNotFound()
+        public EntityNotFoundException()
         {
 
         }
 
-        public EntityNotFound(string message)
+        public EntityNotFoundException(string message)
             : base(message)
         {
             Console.WriteLine(message);
         }
 
-        public EntityNotFound(string message, Exception ex)  
+        public EntityNotFoundException(string message, Exception ex)  
             : base(message, ex)
         {
             Console.WriteLine(message);
