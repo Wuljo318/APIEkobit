@@ -62,7 +62,9 @@ namespace APIEkobit.Controllers
         {
             long id = countryDTO.CountryId;
             var entity = await _countryService.GetById(_ => _.CountryId == id);
+            string shortName = entity.CountryCode;
             entity = _mapper.Map<Country>(countryDTO);
+            entity.CountryCode = shortName;
             await _countryService.Update(entity);
         }
 

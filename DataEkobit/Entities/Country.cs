@@ -15,5 +15,6 @@ namespace DataEkobit.Entities
         public string? Continent { get; set; }
         public string? CountryCode { get; set; }
         public string? Capital { get; set; }
+        public List<User> Users { get; set; }
     }
 }

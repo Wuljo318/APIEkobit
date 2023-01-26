@@ -14,9 +14,14 @@ namespace BusinessEkobit.Automaper
         public MappingProfile()
         {
             CreateMap<User, UserDTO>();
-            CreateMap<UserDTO, User>();
+            CreateMap<UserDTO, User>()
+                .ForMember(d=>d.Password, s=>s.DoNotUseDestinationValue())
+                .ForMember(d=>d.ZipCode, s=>s.DoNotUseDestinationValue())
+                .ForMember(d =>d.Password, s => s.DoNotUseDestinationValue())
+                .ForMember(d => d.Nickname, s => s.DoNotUseDestinationValue())
+                .ForMember(d => d.CountryId, s => s.DoNotUseDestinationValue());
             CreateMap<Country, CountryDTO>();
-            CreateMap<CountryDTO, Country>();
+            CreateMap<CountryDTO, Country>().ForMember(d => d.CountryCode, s => s.DoNotUseDestinationValue());
         }
     }
 }
