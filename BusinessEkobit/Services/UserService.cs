@@ -30,5 +30,10 @@ namespace BusinessEkobit.Services
             //}
             
         }
+
+        //public override Task<List<User>> GetAll()
+        //{
+        //    return _appDbBase.FindAll();
+        //}
     }
 }

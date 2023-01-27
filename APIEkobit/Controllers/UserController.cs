@@ -28,7 +28,7 @@ namespace APIEkobit.Controllers
         {
             _userService = userService;
             _mapper = mapper;
-            countryService = countryService;
+            _countryService = countryService;
         }
 
         [HttpGet("getall")]
@@ -39,7 +39,9 @@ namespace APIEkobit.Controllers
             List<UserDTO> usersDTO = new List<UserDTO>();                                  //drugi način
             foreach (User user in users)
             {
-                UserDTO userDTO = _mapper.Map<UserDTO>(user);
+                UserDTO userDTO = _mapper.Map<UserDTO>(user);               
+                //user.Country = await _countryService.GetById(_ => _.CountryId == user.CountryId); //baca null reffereance, a ne znam kaj bi tu bilo null
+                //userDTO.CountryDTO = _mapper.Map<CountryDTO>(user.Country); 
                 usersDTO.Add(userDTO);                             
             }
             return usersDTO;
@@ -52,7 +54,9 @@ namespace APIEkobit.Controllers
             try
             {
                 var entity = await _userService.GetById(_ => _.UserId == id);
+                entity.Country = await _countryService.GetById(_ => _.CountryId == entity.CountryId);
                 UserDTO userDTO = _mapper.Map<UserDTO>(entity);
+                //userDTO.CountryDTO = _mapper.Map<CountryDTO>(entity.Country);
                 return userDTO;
             }
             catch (Exception ex)
@@ -68,7 +72,7 @@ namespace APIEkobit.Controllers
             User user = _mapper.Map<User>(userDTO);
             //user.CountryId = user.Country.CountryId;   // ovo se ne dozvoljava - 'Object reference not set to an instance of an object.'
             //var country = await _countryService.GetById(_ => _.CountryId == user.Country.CountryId);
-            //user.CountryId = country.CountryId;
+            //user.CountryId = userDTO.CountryDTO.CountryId;
             //user.Country = country;
             await _userService.Add(user); 
         }
@@ -78,6 +82,7 @@ namespace APIEkobit.Controllers
         {
             long id = userDTO.UserId;
             var entity = await _userService.GetById(_ => _.UserId == id);
+            //entity.Country = await _countryService.GetById(_ => _.CountryId == entity.CountryId);
             if (entity == null)
             {
                 throw new EntityNotFoundException("Wrong user");
@@ -85,7 +90,8 @@ namespace APIEkobit.Controllers
             else
             {
                 entity = _mapper.Map<User>(userDTO);
-                entity.CountryId = entity.Country.CountryId;  //ovo se ne dozvoljava
+                //entity.Country = _mapper.Map<Country>(userDTO.CountryDTO);
+                //entity.CountryId = entity.Country.CountryId;  //ovo se ne dozvoljava
                 await _userService.Update(entity);
             }
 

@@ -17,6 +17,7 @@ namespace BusinessEkobit.Models
         public string Address { get; set; }
         public DateTime Birthday { get; set; }
         public CountryDTO CountryDTO { get; set; }
+        public int CountryId { get; set; }
 
     }
 }
