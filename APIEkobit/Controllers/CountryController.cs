@@ -25,7 +25,7 @@ namespace APIEkobit.Controllers
         public async Task<List<CountryDTO>> GetAll()
         {
             List<Country> countries = await _countryService.GetAll();
-            List<CountryDTO> countryDTOs = new List<CountryDTO>();
+            List<CountryDTO> countryDTOs = new();
             foreach (Country country in countries)
             {
                 CountryDTO countryDTO = _mapper.Map<CountryDTO>(country);
@@ -37,7 +37,6 @@ namespace APIEkobit.Controllers
         [HttpGet("getbyid /{id}")]
         public async Task<CountryDTO> GetById([FromRoute] long id)
         {
-            //mozda bi radi optimizacija koda bilo bolje da se tu makne try catch jer u Entity serviceu postoji bacanje errora
             try
             {
                 var entity = await _countryService.GetById(_ => _.CountryId == id);
@@ -54,7 +53,7 @@ namespace APIEkobit.Controllers
         public async Task Add([FromBody] CountryDTO countryDTO)
         {
             Country country = _mapper.Map<Country>(countryDTO);
-            await _countryService.Add(country);                 
+            await _countryService.Add(country);
         }
 
         [HttpPut("update")]
@@ -72,7 +71,7 @@ namespace APIEkobit.Controllers
         public async Task Delete([FromRoute] long id)
         {
             var entity = await _countryService.GetById(_ => _.CountryId == id);
-            if(entity == null)
+            if (entity == null)
             {
                 throw new EntityNotFoundException("Wrong user");
             }

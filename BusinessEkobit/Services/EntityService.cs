@@ -1,8 +1,7 @@
-﻿using BusinessEkobit.Interfaces;
-using BusinessEkobit.Exceptions;
+﻿using BusinessEkobit.Exceptions;
+using BusinessEkobit.Interfaces;
 using DataEkobit.Repositories;
 using System.Linq.Expressions;
-using BusinessEkobit.Extensions;
 
 namespace BusinessEkobit.Services
 {
@@ -14,14 +13,14 @@ namespace BusinessEkobit.Services
             _appDbBase = appDbBase;
         }
 
-        public Task<List<T>> GetAll()
+        public virtual Task<List<T>> GetAll()
         {
             return _appDbBase.FindAll();
         }
         public async Task<T> GetById(Expression<Func<T, bool>> expression)
         {
-            var entity = await _appDbBase.FindById(expression);                   
-            if (entity == null)                                           
+            var entity = await _appDbBase.FindById(expression);
+            if (entity == null)
             {
                 throw new EntityNotFoundException("Entitet nije pronaden");
             }
@@ -29,20 +28,20 @@ namespace BusinessEkobit.Services
             {
                 return entity;
             }
-                
-            
-            
         }
+
         public virtual async Task Add(T entity)
         {
             _appDbBase.Create(entity);
             await _appDbBase.Save();
         }
+
         public virtual async Task Update(T entity)
         {
             _appDbBase.Update(entity);
             await _appDbBase.Save();
         }
+
         public async Task Delete(T entity)
         {
             _appDbBase.Delete(entity);

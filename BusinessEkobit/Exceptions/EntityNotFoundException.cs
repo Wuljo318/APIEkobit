@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BusinessEkobit.Exceptions
+﻿namespace BusinessEkobit.Exceptions
 {
 
     public class EntityNotFoundException : Exception
@@ -20,7 +14,7 @@ namespace BusinessEkobit.Exceptions
             Console.WriteLine(message);
         }
 
-        public EntityNotFoundException(string message, Exception ex)  
+        public EntityNotFoundException(string message, Exception ex)
             : base(message, ex)
         {
             Console.WriteLine(message);

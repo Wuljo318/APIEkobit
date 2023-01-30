@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BusinessEkobit.Exceptions
+﻿namespace BusinessEkobit.Exceptions
 {
     public class CountryNameNotCorrectException : Exception
     {
@@ -13,8 +7,8 @@ namespace BusinessEkobit.Exceptions
 
         }
         public CountryNameNotCorrectException(string message)
-            : base(message) 
-        { 
+            : base(message)
+        {
 
         }
 

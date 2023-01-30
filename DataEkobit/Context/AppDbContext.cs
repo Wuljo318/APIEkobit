@@ -1,12 +1,5 @@
 ﻿using DataEkobit.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataEkobit.Context
 {
@@ -15,7 +8,7 @@ namespace DataEkobit.Context
         public AppDbContext(DbContextOptions options)
             : base(options)
         {
-            
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -26,9 +19,10 @@ namespace DataEkobit.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
+
             modelBuilder.Entity<User>().HasData(
-                new User {
+                new User
+                {
                     UserId = 1,
                     Name = "Dominik",
                     LastName = "Vuljak",
@@ -82,10 +76,11 @@ namespace DataEkobit.Context
                     Capital = "Washington D.C."
                 }
                 );
-            modelBuilder.Entity<User>().HasOne(u => u.Country).WithMany(c => c.Users).HasForeignKey(u=>u.CountryId).HasPrincipalKey(c=>c.CountryId); 
-
-            //modelBuilder.Entity<Country>().Navigation(c => c.Users).UsePropertyAccessMode(PropertyAccessMode.Property);
-
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Country)
+                .WithMany(c => c.Users)
+                .HasForeignKey(u => u.CountryId)
+                .HasPrincipalKey(c => c.CountryId);
         }
         public DbSet<User> Users { get; set; }
     }
