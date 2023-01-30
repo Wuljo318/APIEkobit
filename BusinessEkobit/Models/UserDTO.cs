@@ -11,6 +11,8 @@
         public DateTime Birthday { get; set; }
         public CountryDTO CountryDTO { get; set; }
         public int CountryId { get; set; }
+        public GroupDTO GroupDTO { get; set; }
+        public int GroupId { get; set; }
 
     }
 }

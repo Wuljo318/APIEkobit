@@ -102,6 +102,27 @@ namespace DataEkobit.Context
                 .HasOne(ug => ug.Group)
                 .WithMany(g => g.UserGroups)
                 .HasForeignKey(ug => ug.GroupId);
+
+            modelBuilder.Entity<Group>().HasData(
+                new Group
+                {
+                    GroupId = 1,
+                    Name = "G1",
+                    Description = "Grupa1"
+                },
+                new Group
+                {
+                    GroupId = 2,
+                    Name = "G2",
+                    Description = "Grupa2"
+                },
+                new Group
+                {
+                    GroupId = 3,
+                    Name = "G3",
+                    Description = "Grupa3"
+                }
+                );
         }
         public DbSet<User> Users { get; set; }
     }

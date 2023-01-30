@@ -21,6 +21,10 @@ namespace BusinessEkobit.Automaper
                 .ForMember(d => d.Password, s => s.DoNotUseDestinationValue())
                 .ForMember(d => d.Nickname, s => s.DoNotUseDestinationValue())
                 .ForMember(d => d.CountryId, s => s.DoNotUseDestinationValue());
+
+            CreateMap<Group, GroupDTO>();
+
+            CreateMap<GroupDTO, Group>();
         }
     }
 }

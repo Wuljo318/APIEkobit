@@ -20,12 +20,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IAppDbBase<User>, AppDbBase<User>>();
 builder.Services.AddScoped<IAppDbBase<Country>, AppDbBase<Country>>();
+builder.Services.AddScoped<IAppDbBase<Group>, AppDbBase<Group>>();
 builder.Services.AddScoped<IUserBase, UserBase>();
 builder.Services.AddScoped<ICountryBase, CountryBase>();
+builder.Services.AddScoped<IGroupBase, GroupBase>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICountryService, CountryService>();
-
+builder.Services.AddScoped<IGroupService, GroupService>();
 
 
 var app = builder.Build();
