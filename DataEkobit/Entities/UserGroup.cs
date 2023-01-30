@@ -10,11 +10,18 @@ using System.Threading.Tasks;
 namespace DataEkobit.Entities
 {
     [Table("UserGroup")]
-    [PrimaryKey("UserGroupId")]
     public class UserGroup
     {
         public long UserGroupId { get; set; }
+
+        public long UserId { get; set; }
+
+        [ForeignKey("UserId")]
         public User User { get; set; }
+      
+        public long GroupId { get; set; }
+
+        [ForeignKey("GroupId")]
         public Group Group { get; set; }
     }
 }

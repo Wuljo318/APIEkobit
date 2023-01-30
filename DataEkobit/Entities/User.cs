@@ -7,17 +7,30 @@ namespace DataEkobit.Entities
     {
 
         public long UserId { get; set; }
+
         public string Name { get; set; }
+
         public string LastName { get; set; }
+
         public string Email { get; set; }
+
         public int ZipCode { get; set; }
+
         public string City { get; set; }
+
         public string Address { get; set; }
+
         public DateTime Birthday { get; set; }
+
         public string? Password { get; set; }
+
         public string? Nickname { get; set; }
+
         public int? CountryId { get; set; }
+
         public Country? Country { get; set; }
-        public List<Group> Groups { get; set; }
+
+        public List<UserGroup> UserGroups { get; set; }
+
     }
 }

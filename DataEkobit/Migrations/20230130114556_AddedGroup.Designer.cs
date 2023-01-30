@@ -4,6 +4,7 @@ using DataEkobit.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataEkobit.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230130114556_AddedGroup")]
+    partial class AddedGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,6 +93,9 @@ namespace DataEkobit.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("UserGroupId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("GroupId");
 
                     b.ToTable("Group");
@@ -135,6 +141,9 @@ namespace DataEkobit.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("UserGroupId")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("ZipCode")
                         .HasColumnType("int");
 
@@ -156,6 +165,7 @@ namespace DataEkobit.Migrations
                             Name = "Dominik",
                             Nickname = "Dodo",
                             Password = "lozinka",
+                            UserGroupId = 0L,
                             ZipCode = 42000
                         },
                         new
@@ -169,6 +179,7 @@ namespace DataEkobit.Migrations
                             Name = "Dominik1",
                             Nickname = "Dodo1",
                             Password = "lozinka1",
+                            UserGroupId = 0L,
                             ZipCode = 42000
                         },
                         new
@@ -182,6 +193,7 @@ namespace DataEkobit.Migrations
                             Name = "Dominik1",
                             Nickname = "Dodo1",
                             Password = "lozinka1",
+                            UserGroupId = 0L,
                             ZipCode = 42000
                         });
                 });

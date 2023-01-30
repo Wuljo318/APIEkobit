@@ -76,11 +76,32 @@ namespace DataEkobit.Context
                     Capital = "Washington D.C."
                 }
                 );
+
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Country)
                 .WithMany(c => c.Users)
                 .HasForeignKey(u => u.CountryId)
                 .HasPrincipalKey(c => c.CountryId);
+
+            //modelBuilder.Entity<User>()
+            //    .HasOne(u => u.User) 
+
+            //modelBuilder.Entity<Group>()
+            //    .HasMany(g => g.Users)
+            //    .WithMany(u => u.Groups);
+
+            modelBuilder.Entity<UserGroup>()
+                .HasKey(ug => ug.UserGroupId);
+
+            modelBuilder.Entity<UserGroup>()
+                .HasOne(ug => ug.User)
+                .WithMany(u => u.UserGroups)
+                .HasForeignKey(ug => ug.UserId);
+
+            modelBuilder.Entity<UserGroup>()
+                .HasOne(ug => ug.Group)
+                .WithMany(g => g.UserGroups)
+                .HasForeignKey(ug => ug.GroupId);
         }
         public DbSet<User> Users { get; set; }
     }
