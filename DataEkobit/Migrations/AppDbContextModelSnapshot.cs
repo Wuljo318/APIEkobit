@@ -45,7 +45,7 @@ namespace DataEkobit.Migrations
 
                     b.HasKey("CountryId");
 
-                    b.ToTable("country");
+                    b.ToTable("country", (string)null);
 
                     b.HasData(
                         new

@@ -18,5 +18,6 @@ namespace DataEkobit.Entities
         public string? Nickname { get; set; }
         public int? CountryId { get; set; }
         public Country? Country { get; set; }
+        public List<Group> Groups { get; set; }
     }
 }
