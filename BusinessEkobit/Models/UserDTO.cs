@@ -1,4 +1,6 @@
-﻿namespace BusinessEkobit.Models
+﻿using DataEkobit.Entities;
+
+namespace BusinessEkobit.Models
 {
     public class UserDTO
     {
@@ -11,8 +13,8 @@
         public DateTime Birthday { get; set; }
         public CountryDTO CountryDTO { get; set; }
         public int CountryId { get; set; }
-        public GroupDTO GroupDTO { get; set; }
-        public int GroupId { get; set; }
+        public List<UserGroup> UserGroups { get; set; }
+
 
     }
 }
