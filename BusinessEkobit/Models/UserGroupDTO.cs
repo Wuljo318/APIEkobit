@@ -1,12 +1,4 @@
-﻿using DataEkobit.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BusinessEkobit.Models
+﻿namespace BusinessEkobit.Models
 {
     public class UserGroupDTO
     {
@@ -14,10 +6,10 @@ namespace BusinessEkobit.Models
 
         public long UserId { get; set; }
 
-        public User User { get; set; }
+        public UserDTO UserDTO { get; set; }
 
         public long GroupId { get; set; }
 
-        public Group Group { get; set; }
+        public GroupDTO GroupDTO { get; set; }
     }
 }

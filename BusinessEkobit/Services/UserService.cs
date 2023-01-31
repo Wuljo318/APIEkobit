@@ -7,10 +7,13 @@ namespace BusinessEkobit.Services
 {
     public class UserService : EntityService<User>, IUserService
     {
-        public UserService(IUserBase appDbBase) : base(appDbBase)
+        public UserService(IUserBase appDbBase)
+            : base(appDbBase)
         {
 
         }
+
+
         public override async Task Add(User user)
         {
             _appDbBase.Create(user);

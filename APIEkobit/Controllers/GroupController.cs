@@ -25,7 +25,7 @@ namespace APIEkobit.Controllers
         {
             List<Group> groups = await _groupService.GetAll();
             List<GroupDTO> groupDTOs = new List<GroupDTO>();
-            foreach(Group group in groups)
+            foreach (Group group in groups)
             {
                 GroupDTO groupDTO = _mapper.Map<GroupDTO>(group);
                 groupDTOs.Add(groupDTO);
@@ -42,7 +42,7 @@ namespace APIEkobit.Controllers
                 GroupDTO GroupDTO = _mapper.Map<GroupDTO>(entity);
                 return GroupDTO;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new EntityNotFoundException(ex.Message, ex);
             }
@@ -60,7 +60,7 @@ namespace APIEkobit.Controllers
         {
             long id = groupDTO.GroupId;
             var entity = await _groupService.GetById(_ => _.GroupId == id);
-            if(entity == null)
+            if (entity == null)
             {
                 throw new EntityNotFoundException("Wrong group");
             }

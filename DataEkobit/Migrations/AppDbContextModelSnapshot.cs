@@ -45,7 +45,7 @@ namespace DataEkobit.Migrations
 
                     b.HasKey("CountryId");
 
-                    b.ToTable("country");
+                    b.ToTable("country", (string)null);
 
                     b.HasData(
                         new
@@ -92,7 +92,7 @@ namespace DataEkobit.Migrations
 
                     b.HasKey("GroupId");
 
-                    b.ToTable("Group");
+                    b.ToTable("Group", (string)null);
 
                     b.HasData(
                         new
@@ -226,7 +226,7 @@ namespace DataEkobit.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserGroup");
+                    b.ToTable("UserGroup", (string)null);
                 });
 
             modelBuilder.Entity("DataEkobit.Entities.User", b =>

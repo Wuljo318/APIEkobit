@@ -1,16 +1,13 @@
-﻿using DataEkobit.Entities;
+﻿using BusinessEkobit.Interfaces;
+using DataEkobit.Entities;
 using DataEkobit.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BusinessEkobit.Services
 {
-    public class UserGroupService : EntityService<UserGroup>
+    public class UserGroupService : EntityService<UserGroup>, IUserGroupService
     {
-        public UserGroupService(IAppDbBase<UserGroup> appDbBase)
+        public UserGroupService(IUserGroupBase appDbBase)
             : base(appDbBase)
         {
 
